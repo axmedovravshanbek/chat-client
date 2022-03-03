@@ -1,7 +1,8 @@
 import {makeAutoObservable} from "mobx";
 import AuthService from "./AuthService";
 import axios from 'axios';
-import {API_URL} from "./axiosV2";
+import $api, {API_URL} from "./axiosV2";
+import {useNavigate} from "react-router-dom";
 
 export default class Store {
     user = {};
@@ -22,18 +23,6 @@ export default class Store {
 
     setLoading(bool) {
         this.isLoading = bool;
-    }
-
-    async login(email, password) {
-        try {
-            const response = await AuthService.login(email, password);
-            console.log(response);
-            localStorage.setItem('token', response.data.accessToken);
-            this.setAuth(true);
-            this.setUser(response.data.user);
-        } catch (e) {
-            console.log(e.response?.data?.message);
-        }
     }
 
     async registration(email, password) {
@@ -66,6 +55,7 @@ export default class Store {
             console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
+            console.log(1);
             this.setUser(response.data.user);
         } catch (e) {
             console.log(e.response?.data?.message);

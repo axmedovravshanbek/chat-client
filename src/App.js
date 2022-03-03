@@ -1,50 +1,35 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import LoginForm from "./loginForm";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
-import UserService from "./UserService";
+import RenameIt from './pages/renameIT'
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 
 const App = () => {
     const {store} = useContext(Context);
-    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
             store.checkAuth()
         }
-        getUsers();
+        // if (localStorage.getItem('token')) {
+        //     store.checkAuth()
+        // }
+        // if (!store.isAuth) {
+        //     navigate('/login');
+        // }
     }, []);
-
-    async function getUsers() {
-        try {
-            const response = await UserService.fetchUsers();
-            setUsers(response.data);
-        } catch (e) {
-            console.error(e);
-        }
-    }
 
     if (store.isLoading) {
         return <div>Загрузка...</div>
     }
-
-    if (!store.isAuth) {
-        return (
-            <div>
-                <LoginForm/>
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <h1>{`Пользователь авторизован ${store.user.email}`}</h1>
-            <h1>{store.user.isActivated ? 'Аккаунт подтвержден по почте' : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}</h1>
-            <button onClick={() => store.logout()}>Выйти</button>
-            {users.map(user =>
-                <div key={user.email}>{user.email}</div>
-            )}
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route exact path="/" element={store.isAuth ? <RenameIt/> : <Navigate to='/login'/>}/>
+                <Route path="/login" element={<LoginForm/>}/>
+            </Routes>
+        </BrowserRouter>
     );
 };
 
