@@ -1,0 +1,30 @@
+.layout{
+    width:           100vw;
+    height:          100vh;
+    overflow:        hidden;
+    display:         flex;
+    justify-content: center;
+    align-items:     center;
+    padding:         24px;
+}
+.content{
+    background:      #FFFFFF;
+    border-radius:   10px;
+    padding:         48px 24px;
+    width:           100%;
+    flex-grow:       0 !important;
+    display:         flex;
+    justify-content: center;
+    align-items:     center;
+    max-width:       500px;
+}
+.form{
+    width:     100%;
+    max-width: 300px;
+}
+.forgot{
+    float: right;
+}
+.submitButton{
+    width: 100%;
+}
