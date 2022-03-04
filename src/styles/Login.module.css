@@ -14,9 +14,13 @@
     width:           100%;
     flex-grow:       0 !important;
     display:         flex;
+    flex-direction:  column;
     justify-content: center;
     align-items:     center;
     max-width:       500px;
+}
+h1{
+    font-size: 28px;
 }
 .form{
     width:     100%;
@@ -27,4 +31,9 @@
 }
 .submitButton{
     width: 100%;
+}
+.upload{
+    margin-bottom:   24px;
+    display:         flex !important;
+    justify-content: center;
 }

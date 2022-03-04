@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import UserService from "../UserService";
-import {Routes,Route, useNavigate, Outlet} from "react-router-dom";
+import {Routes, Route, useNavigate, Outlet} from "react-router-dom";
 import axios from "axios";
 import {API_URL} from "../axiosV2";
 import Dont from "./dont";
@@ -16,11 +16,10 @@ const AppBody = () => {
         getUsers();
         axios.get(`${API_URL}/refresh`, {withCredentials: true})
             .then((response) => {
-                console.log(response);
                 localStorage.setItem('token', response.data.accessToken);
                 store.setAuth(true);
                 store.setUser(response.data.user);
-                if (!response.data.user.isActivated){
+                if (!response.data.user.isActivated) {
                     navigate('/activate')
                 }
             })

@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 export default class Store {
     user = {};
     isAuth = false;
-    lang = localStorage.getItem('language') || 'ru';
+    lang = localStorage.getItem('lang') || 'ru';
     isLoading = false;
 
     constructor() {
@@ -20,6 +20,7 @@ export default class Store {
 
     setLang(lang) {
         this.lang = lang;
+        localStorage.setItem('lang', lang)
     }
 
     setUser(user) {

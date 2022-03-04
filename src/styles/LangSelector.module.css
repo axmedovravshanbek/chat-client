@@ -1,0 +1,22 @@
+.container{
+    position: absolute;
+    top:      0;
+    right:    0;
+    display:  flex;
+    margin:   16px 24px;
+}
+.flag{
+    border-radius: 50%;
+    margin:        8px;
+    cursor:        pointer;
+    position:      relative;
+}
+.flagOutline{
+    position:      absolute;
+    width:         40px;
+    height:        40px;
+    top:           -5px;
+    left:          -5px;
+    border-radius: 50px;
+    border:        6px solid #1890FF;
+}
