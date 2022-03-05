@@ -1,6 +1,7 @@
+/*--vh:1vh;*/
 .layout{
     width:           100vw;
-    height:          100vh;
+    height:          100%;
     overflow:        hidden;
     display:         flex;
     justify-content: center;

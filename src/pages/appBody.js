@@ -1,30 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
-import UserService from "../UserService";
-import {Routes, Route, useNavigate, Outlet, Link} from "react-router-dom";
+import {Link, Outlet, Route, Routes, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {API_URL} from "../components/axiosV2";
 import Dont from "./dont";
 import ChatPage from './chatpage'
 import {Layout, Menu} from "antd";
 import s from '../styles/Home.module.css'
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-} from '@ant-design/icons';
+import {UploadOutlined, UserOutlined, VideoCameraOutlined,} from '@ant-design/icons';
 
-const {Header, Sider, Content} = Layout;
+const {Sider} = Layout;
 
 const AppBody = () => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
     const {store} = useContext(Context);
+
     useEffect(() => {
-        store.socket.emit('online');
+        store.socket.emit('user_online', store.user._id);
         axios.get(`${API_URL}/refresh`, {withCredentials: true})
             .then((response) => {
                 localStorage.setItem('token', response.data.accessToken);
@@ -39,19 +33,20 @@ const AppBody = () => {
                 navigate('/login')
             })
             .finally(() => {
+                // alert(1)
                 // store.setLoading(false);
             })
     }, []);
 
     return (
-        <div>
+        <>
             <Layout className={s.layout}>
-                <Sider trigger={null} collapsible collapsed={collapsed}>
+                <Sider className={s.sider} trigger={null} collapsible collapsed={collapsed}>
                     <div className={s.logo}/>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1" icon={<UserOutlined/>}>
                             <Link to='/'>
-                                nav 1
+                                {store.user.email}
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="2" icon={<VideoCameraOutlined/>}>
@@ -78,7 +73,7 @@ const AppBody = () => {
                 </Routes>
             </Layout>
             <Outlet/>
-        </div>
+        </>
     );
 };
 

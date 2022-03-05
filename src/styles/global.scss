@@ -8,6 +8,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'TT Norms';
   src: url('../fonts/TTNorms-Medium.eot');
@@ -19,21 +20,36 @@
   font-style: normal;
 }
 
-*{
+* {
   font-family: "TT Norms Medium", sans-serif;
   font-weight: 500;
 }
-.ant-upload.ant-upload-select-picture-card{
+
+.ant-upload.ant-upload-select-picture-card {
   margin: 0;
 }
-.content{
-  background:      #FFFFFF;
-  border-radius:   10px;
+
+.content {
+  background: #FFFFFF;
+  border-radius: 10px;
   margin: 24px 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
 }
-.transition{
+
+.transition {
   transition: 0.5s;
+}
+
+.sender-holder {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.input-message {
+  padding: 6.5px 16px;
+  min-height: 40px;
+  max-height: 120px;
+  overflow: auto;
 }

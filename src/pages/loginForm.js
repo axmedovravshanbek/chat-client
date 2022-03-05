@@ -56,7 +56,6 @@ const LoginForm = () => {
         }
     };
     return (
-        <div>
             <Layout className={s.layout}>
                 <AuthLangSelect/>
                 <h1>{lang.login[store.lang]}</h1>
@@ -99,7 +98,6 @@ const LoginForm = () => {
                     </Form>
                 </Layout.Content>
             </Layout>
-        </div>
     );
 };
 

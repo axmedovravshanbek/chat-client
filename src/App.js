@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import LoginForm from "./pages/loginForm";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
@@ -9,17 +9,19 @@ import RegisterForm from "./pages/registerForm";
 import Activate from "./pages/activate";
 import io from 'socket.io-client'
 
-const socket = io("http://localhost");
+const socket = io('http://192.168.0.104');
 
 const App = () => {
-        const {store} = useContext(Context);
-        store.setSocket(socket);
+    const [vh, setVH] = useState(window.innerHeight);
+    const {store} = useContext(Context);
+    store.setSocket(socket);
 
-
-        if (store.isLoading) {
-            return <div>Загрузка...</div>
-        }
-        return (
+    window.addEventListener('resize', () => {setVH(window.innerHeight)});
+    if (store.isLoading) {
+        return <div>Загрузка...</div>
+    }
+    return (
+        <div style={{height: vh}}>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/*" element={<RenameIt/>}/>
@@ -28,8 +30,8 @@ const App = () => {
                     <Route path="/activate" element={<Activate/>}/>
                 </Routes>
             </BrowserRouter>
-        );
-    }
-;
+        </div>
+    );
+};
 
 export default observer(App);

@@ -1,27 +1,31 @@
 .layout{
-    width:           100vw;
-    height:          100vh;
-    overflow:        hidden;
+    width:    100vw;
+    height:   100%;
+    overflow: hidden;
     /*display:         flex;*/
     /*justify-content: center;*/
     /*align-items:     center;*/
     /*padding:         24px;*/
 }
 .logo{
-    height: 32px;
-    margin: 16px;
+    height:     32px;
+    margin:     16px;
     background: rgba(255, 255, 255, 0.3);
 }
 .trigger{
-    padding: 24px;
-    font-size: 18px;
+    padding:     24px;
+    font-size:   18px;
     line-height: 64px;
-    cursor: pointer;
-    transition: color 0.3s;
+    cursor:      pointer;
+    transition:  color 0.3s;
 }
-
-.trigger:hover {
-    color: #1890ff;
+.trigger:hover{
+    color: #1890FF;
+}
+.sider{
+    min-width: 50px !important;
+    flex:      0 0 50px !important;
+    width:     50px !important;
 }
 h1{
     font-size: 28px;

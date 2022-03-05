@@ -1,38 +1,65 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useRef} from 'react';
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import {Link, useParams} from "react-router-dom";
 import MainHeader from "../components/mainHeader";
-import {Layout, Input, Button, Form} from "antd";
+import {Button, Form, Input, Layout} from "antd";
 import {SendOutlined} from '@ant-design/icons'
 import {lang} from "../lang";
 
-const {Header, Sider, Content} = Layout;
+const {Content} = Layout;
 
 const ChatPage = () => {
     const [message, setMessage] = useState('');
-    // const params = useParams();
+    const [inputHeight, setInputHeight] = useState('unset');
+    const passwordInput = useRef(null);// const params = useParams();
     // console.log(params.id);
     const {store} = useContext(Context);
+
+
+    const sendMessage = () => {
+        console.clear();
+        setInputHeight('40 !important');
+        setMessage('');
+        console.log('message', JSON.stringify(message));
+        passwordInput.current.focus();
+    };
     return (
         <Layout>
             <MainHeader>
-                <h2>                {store.otherUser.email}</h2>
+                <h2>{store.otherUser.email}</h2>
             </MainHeader>
             <Content className='content'>
-                <div style={{flexGrow: 1}}/>
+                <div style={{flexGrow: 1}}>
+                    <h2>{'message[0]'}</h2>
+                    <h4>{message===''?'null':'nullmas'}</h4>
+                    <h4>{message?'mesasge':'mesaagemas'}</h4>
+                    <h4>{message==='\n'?'n':'nmas'}</h4>
+                    <h4>{JSON.stringify(message[0])}</h4>
+                    {/*<h3>{message.length>0?'bor':'no'}</h3>*/}
+                </div>
                 <div className="">
-                    <Form onFinish={() => console.log('finish')} onFinishFailed={()=>console.log('failed')} style={{display: 'flex'}}>
-                        <Input
-                            onChange={(e) => setMessage(!!e.target.value)}
-                            className='transition'
+                    <Form onFinish={sendMessage} onFinishFailed={()=>console.log('failed')} style={{display: 'flex'}}>
+                        <Input.TextArea
+                            ref={passwordInput}
+                            autoSize={{ minRows: 1, maxRows: 5 }}
+                            onChange={(e) => {
+                                setInputHeight('unset');
+                                setMessage(e.target.value)
+                            }}
+                            className='transition input-message'
                             size='large'
-                            name="message"
+                            value={message[0]!=='\n'?message:null}
+                            onPressEnter={(e)=>sendMessage(e.target.value)}
+                            autoComplete="off"
                             placeholder={lang.messagePlaceholder[store.lang]}
-                            style={{padding: '6.5px 16px', borderRadius: (message ? '20px 0 0 20px' : '20px')}}/>
-                        <div className='transition' style={{width: message ? 48 : 0, overflow: 'hidden', flexShrink: 0}}>
+                            style={{
+                                borderRadius: ((message[0]!=='\n' && message!=='')? '20px 0 0 20px' : '20px'),
+                                maxHeight:inputHeight
+                            }}
+                        />
+                        <div className='transition sender-holder' style={{width:(message[0]!=='\n' && message!=='') ? 48 : 0}}>
                             <Button
-                                style={{borderRadius: (message?'0 20px 20px 0':'20px')}}
+                                style={{borderRadius: ((message[0]!=='\n' && message!=='')?'0 20px 20px 0':'20px'), height:'100%'}}
                                 htmlType="submit"
                                 size='large'
                                 type="primary">

@@ -5,9 +5,7 @@ import Store from "./store";
 import './styles/global.scss'
 export const store = new Store();
 
-export const Context = createContext({
-    store,
-});
+export const Context = createContext({store});
 
 ReactDOM.render(
     <Context.Provider value={{
