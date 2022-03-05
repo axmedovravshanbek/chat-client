@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {useNavigate} from "react-router";
-import $api from "../axiosV2";
+import $api from "../components/axiosV2";
 import {Link} from 'react-router-dom'
 import {Button, Checkbox, Form, Input, Layout} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';

@@ -7,7 +7,7 @@ import s from "../styles/Login.module.css";
 import {lang} from "../lang";
 import {Link, useNavigate} from "react-router-dom";
 import {Context} from "../index";
-import $api from "../axiosV2";
+import $api from "../components/axiosV2";
 import AuthLangSelect from "../components/authLangSelect";
 import {observer} from "mobx-react-lite";
 

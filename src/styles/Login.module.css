@@ -10,13 +10,13 @@
 .content{
     background:      #FFFFFF;
     border-radius:   10px;
-    padding:         48px 24px;
-    width:           100%;
+    padding:         48px 16px;
     flex-grow:       0 !important;
     display:         flex;
     flex-direction:  column;
     justify-content: center;
     align-items:     center;
+    width:           100%;
     max-width:       500px;
 }
 h1{

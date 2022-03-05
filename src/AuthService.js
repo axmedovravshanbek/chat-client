@@ -1,4 +1,4 @@
-import $api from "./axiosV2";
+import $api from "./components/axiosV2";
 
 export default class AuthService {
     // static async login(email, password) {

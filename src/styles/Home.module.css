@@ -1,0 +1,43 @@
+.layout{
+    width:           100vw;
+    height:          100vh;
+    overflow:        hidden;
+    /*display:         flex;*/
+    /*justify-content: center;*/
+    /*align-items:     center;*/
+    /*padding:         24px;*/
+}
+.logo{
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+}
+.trigger{
+    padding: 24px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.trigger:hover {
+    color: #1890ff;
+}
+h1{
+    font-size: 28px;
+}
+.form{
+    width:     100%;
+    max-width: 300px;
+}
+.forgot{
+    float: right;
+}
+.submitButton{
+    width: 100%;
+}
+.upload{
+    margin-bottom:   24px;
+    display:         flex !important;
+    justify-content: center;
+}

@@ -1,22 +1,20 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import LoginForm from "./pages/loginForm";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import RenameIt from './pages/appBody'
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
-import axios from "axios";
-import {API_URL} from "./axiosV2";
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import 'antd/dist/antd.css'
 import RegisterForm from "./pages/registerForm";
 import Activate from "./pages/activate";
+import io from 'socket.io-client'
+
+const socket = io("http://localhost");
 
 const App = () => {
         const {store} = useContext(Context);
+        store.setSocket(socket);
 
-        useEffect(() => {
-                localStorage.setItem('language', 'uz')
-            }, []
-        );
 
         if (store.isLoading) {
             return <div>Загрузка...</div>
