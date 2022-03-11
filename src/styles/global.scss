@@ -25,6 +25,19 @@
   font-weight: 500;
 }
 
+h1 {
+  font-size: 28px;
+}
+
+body {
+  overscroll-behavior-y: contain;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-bottom: 0;
+  line-height: 1;
+}
+
 .ant-upload.ant-upload-select-picture-card {
   margin: 0;
 }
@@ -36,10 +49,145 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
+
+  &.w500 {
+    padding: 48px 16px;
+    flex-grow: 0 !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+.w300 {
+  width: 100%;
+  max-width: 340px;
+}
+
+.overflowY {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.image-upload {
+  margin-bottom: 24px;
+  display: flex !important;
+  justify-content: center;
 }
 
 .transition {
   transition: 0.5s;
+}
+
+.message {
+  align-self: flex-start;
+  margin-bottom: 12px;
+  padding: 12px 20px;
+  border-radius: 0 24px 24px 24px;
+  background: #1890FF;
+  min-width: 100px;
+  max-width: 75%;
+
+  h4, .message__time {
+    color: #fff;
+  }
+
+  & .message__time {
+    margin-right: 5px;
+    opacity: 0.7;
+    align-self: flex-end;
+    font-size: 10px;
+  }
+
+  &.my {
+    border-radius: 24px 0 24px 24px;
+    align-self: flex-end;
+    background: #FFFFFF;
+    border: 1px solid #d9d9d9;
+
+    h4, .message__time {
+      color: #000;
+    }
+  }
+}
+
+.message__date {
+  position: sticky;
+  top: 16px;
+  padding: 2px;
+  width: 150px;
+  text-align: center;
+  color: #000;
+  border-radius: 50px;
+  background: #e9e9e9;
+  margin: auto;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rstb button {
+  background-color: #1890FF;
+  border-radius: 20px;
+  bottom: 30px;
+  height: 40px;
+  transition: 0.3s;
+  width: 40px;
+  position: absolute;
+  right: 0;
+
+  &:before {
+    content: '';
+    top: 2px;
+    left: 0;
+    background-image: url('../down.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40%;
+    width: 40px;
+    position: absolute;
+    height: 38px;
+  }
+
+  &:hover {
+    background: #40a9ff;
+  }
+}
+
+.rstb {
+  flex-grow: 1;
+}
+
+.p24 {
+  padding: 24px;
+}
+
+.d-flex {
+  display: flex;
+
+  &.aic {
+    align-items: center;
+  }
+
+  &.f-end {
+    justify-content: flex-end;
+  }
+
+  &.jcc {
+    justify-content: center;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
 }
 
 .sender-holder {
@@ -49,7 +197,100 @@
 
 .input-message {
   padding: 6.5px 16px;
-  min-height: 40px;
-  max-height: 120px;
-  overflow: auto;
+}
+
+.flags__container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  margin: 16px 24px;
+
+  .flag {
+    border-radius: 50%;
+    margin: 8px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .flag__outline {
+    box-sizing: content-box !important;
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    top: -4.5px;
+    left: -4.5px;
+    border-radius: 50px;
+    border: 5px solid #1890FF;
+  }
+}
+
+.app_body {
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sideR {
+  //min-width: 64px !important;
+  //flex:      0 0 64px !important;
+  //width:     64px !important;
+  .side__logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.side__trigger {
+  padding: 24px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #1890FF;
+  }
+}
+
+@media (max-width: 768px) {
+  .sideR {
+    min-width: 300px !important;
+    flex:      0 0 300px !important;
+    width:     300px !important;
+    .side__logo {
+      height: 32px;
+      margin: 16px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .ant-layout-sider-collapsed {
+    overflow: hidden;
+    min-width: 0px !important;
+    flex: 0 0 0px !important;
+    width: 0px !important;
+
+    .side__logo {
+      height: 32px;
+      margin: 16px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+  .content {
+    margin: 16px 12px;
+    padding: 16px;
+
+    &.w500 {
+      padding: 48px 16px;
+      flex-grow: 0 !important;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+  .p24 {
+    padding: 12px;
+  }
 }

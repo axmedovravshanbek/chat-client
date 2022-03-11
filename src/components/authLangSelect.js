@@ -1,34 +1,18 @@
-import React, {useContext, useState} from 'react';
-import {motion, AnimateSharedLayout} from "framer-motion";
+import React, {useContext} from 'react';
+import {AnimateSharedLayout, motion} from "framer-motion";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import s from '../styles/LangSelector.module.css'
 
 const AuthLangSelect = () => {
     const {store} = useContext(Context);
-    const langs = [
-        {
-            lang: 'en',
-            flag: './img/en.svg'
-        },
-        {
-            lang: 'uz',
-            flag: './img/uz.svg'
-        },
-        {
-            lang: 'ru',
-            flag: './img/ru.svg'
-        }
-    ];
+    const languages = ['en', 'uz', 'ru'];
     return (
-        <div className={s.container}>
+        <div className='flags__container' style={{position:'static'}}>
             <AnimateSharedLayout>
-                {langs.map(({lang, flag}) => (
-                    <div className={s.flag} key={lang} onClick={() => store.setLang(lang)}>
-                        <img src={flag} alt="" style={{borderRadius: 50, width:30}}/>
-                        {store.lang === lang && (
-                            <motion.div layoutId="outline" className={s.flagOutline}/>
-                        )}
+                {languages.map((lang) => (
+                    <div className='flag' key={lang} onClick={() => store.setLang(lang)}>
+                        <img src={`./img/${lang}.svg`} alt={lang} style={{borderRadius: 50, width: 30}}/>
+                        {store.lang === lang && <motion.div layoutId="outline" className='flag__outline'/>}
                     </div>
                 ))}
             </AnimateSharedLayout>

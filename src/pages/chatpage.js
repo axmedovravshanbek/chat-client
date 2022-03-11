@@ -1,68 +1,116 @@
-import React, {useContext, useState, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import MainHeader from "../components/mainHeader";
 import {Button, Form, Input, Layout} from "antd";
-import {SendOutlined} from '@ant-design/icons'
-import {lang} from "../lang";
-
+import {ArrowLeftOutlined, SendOutlined} from '@ant-design/icons'
+import {useNavigate, useParams} from "react-router-dom";
+import {lang} from "../js/lang";
+import MainHeader from "../components/mainHeader";
+import Message from "../components/message";
+import Loading from "./loading";
+import UserInfo from "../components/userInfo";
+import DateConverter from '../components/dateConverter'
 const {Content} = Layout;
 
 const ChatPage = () => {
+    const navigate = useNavigate();
     const [message, setMessage] = useState('');
-    const [inputHeight, setInputHeight] = useState('unset');
-    const passwordInput = useRef(null);// const params = useParams();
-    // console.log(params.id);
+    const [typing, setTyping] = useState(false);
+    const textarea = useRef(null);
+    const params = useParams();
     const {store} = useContext(Context);
 
-
     const sendMessage = () => {
-        console.clear();
-        setInputHeight('40 !important');
+        const now = new Date().getTime();
+        if (message[0] !== '\n' && message !== '') {
+            store.setMessages(store.messages.concat([{
+                senderId: store.user._id,
+                receiverId: store.otherUser._id,
+                msgContent: message,
+                deliveryStatus: 0,
+                sentTime: now
+            }]));
+            store.socket.emit('iSentMessage', {
+                senderId: store.user._id,
+                receiverId: store.otherUser._id,
+                RSId: store.otherUser.socketId,
+                msgContent: message,
+                sentTime: now
+            })
+        }
         setMessage('');
-        console.log('message', JSON.stringify(message));
-        passwordInput.current.focus();
+        textarea.current.focus();
     };
+    const textareaChange = async (e) => {
+        await setMessage(e.target.value);
+        setTyping(e.target.value[0] !== '\n' && e.target.value !== '');
+    };
+
+    useEffect(() => {
+        store.setOtherUser(Array.from(store.users).filter(({...item}) => item._id === params.id)[0]);
+    }, [store.users]);
+    useEffect(() => {
+        if (typing) {
+            store.socket.emit('imTyping', {
+                receiverId: store.otherUser?._id,
+                RSId: store.otherUser?.socketId
+            });
+            setTimeout(() => {
+                setTyping(false)
+            }, 3000)
+        } else store.socket.emit('imTyping', {RSId: store.otherUser?.socketId});
+    }, [typing]);
+    useEffect(() => {
+        store.socket.emit('iRead', {
+            receiverId: store.user?._id,
+            senderId: store.otherUser?._id,
+            RSId: store.otherUser?.socketId
+        })
+    }, [store.messages.length]);
+
+    if (store.user?._id === undefined || store.otherUser?._id === undefined) {
+        return (
+            <Loading/>
+        )
+    }
     return (
         <Layout>
             <MainHeader>
-                <h2>{store.otherUser.email}</h2>
-            </MainHeader>
-            <Content className='content'>
-                <div style={{flexGrow: 1}}>
-                    <h2>{'message[0]'}</h2>
-                    <h4>{message===''?'null':'nullmas'}</h4>
-                    <h4>{message?'mesasge':'mesaagemas'}</h4>
-                    <h4>{message==='\n'?'n':'nmas'}</h4>
-                    <h4>{JSON.stringify(message[0])}</h4>
-                    {/*<h3>{message.length>0?'bor':'no'}</h3>*/}
+                <ArrowLeftOutlined className='side__trigger' onClick={() => navigate('/')}/>
+                <div className="d-flex aic">
+                    <UserInfo user={store.otherUser}/>
                 </div>
-                <div className="">
-                    <Form onFinish={sendMessage} onFinishFailed={()=>console.log('failed')} style={{display: 'flex'}}>
-                        <Input.TextArea
-                            ref={passwordInput}
-                            autoSize={{ minRows: 1, maxRows: 5 }}
-                            onChange={(e) => {
-                                setInputHeight('unset');
-                                setMessage(e.target.value)
-                            }}
-                            className='transition input-message'
-                            size='large'
-                            value={message[0]!=='\n'?message:null}
-                            onPressEnter={(e)=>sendMessage(e.target.value)}
-                            autoComplete="off"
-                            placeholder={lang.messagePlaceholder[store.lang]}
-                            style={{
-                                borderRadius: ((message[0]!=='\n' && message!=='')? '20px 0 0 20px' : '20px'),
-                                maxHeight:inputHeight
-                            }}
-                        />
-                        <div className='transition sender-holder' style={{width:(message[0]!=='\n' && message!=='') ? 48 : 0}}>
-                            <Button
-                                style={{borderRadius: ((message[0]!=='\n' && message!=='')?'0 20px 20px 0':'20px'), height:'100%'}}
-                                htmlType="submit"
-                                size='large'
-                                type="primary">
+            </MainHeader>
+            <Content className='content' style={{paddingTop: 0}}>
+                <ScrollToBottom className='overflowY rstb'>
+                    <div style={{padding: '16px 0'}} className='d-flex column'>
+                        {store.messages.filter(msg => msg.senderId === store.otherUser?._id || msg.receiverId === store.otherUser?._id).map((msg, id, arr) => (
+                            <React.Fragment key={msg._id}>
+                                {new Date(msg.sentTime).toDateString() !== new Date(arr[id - 1]?.sentTime).toDateString() ?
+                                    <div className="message__date">
+                                        <DateConverter d={msg.sentTime}/>
+                                    </div>
+                                    : null}
+                                <Message msg={msg} my={msg.senderId === store.user?._id}/>
+                            </React.Fragment>
+                        ))}
+                    </div>
+                </ScrollToBottom>
+                <div style={{height: 20, display: 'flex', alignItems: 'flex-end',}}>
+                    <Form onFinish={sendMessage} onFinishFailed={() => console.log('failed')}
+                          style={{display: 'flex', flexGrow: 1}}>
+                        <Input.TextArea ref={textarea} autoSize={{minRows: 1, maxRows: 3}} onChange={textareaChange}
+                                        className='transition input-message' size='large'
+                                        value={message[0] !== '\n' ? message : null} onPressEnter={sendMessage}
+                                        autoComplete="off" placeholder={lang.messagePlaceholder[store.lang]}
+                                        style={{borderRadius: ((message[0] !== '\n' && message !== '') ? '20px 0 0 20px' : '20px')}}/>
+                        <div className='transition sender-holder'
+                             style={{width: (message[0] !== '\n' && message !== '') ? 48 : 0}}>
+                            <Button style={{
+                                borderRadius: ((message[0] !== '\n' && message !== '') ? '0 20px 20px 0' : '20px'),
+                                height: '100%'
+                            }} htmlType="submit" size='large' type="primary">
                                 <SendOutlined/>
                             </Button>
                         </div>
