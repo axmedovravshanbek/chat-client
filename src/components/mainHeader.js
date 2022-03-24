@@ -1,5 +1,4 @@
 import React from 'react';
-import {MenuUnfoldOutlined} from "@ant-design/icons";
 import {Layout} from "antd";
 
 const MainHeader = ({children = 'alo'}) => {

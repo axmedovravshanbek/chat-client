@@ -22,6 +22,7 @@ const App = () => {
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/registration" element={<RegisterForm/>}/>
                     <Route path="/activate" element={<Activate/>}/>
+                    <Route path="*" element={<div>404 outer</div>} />
                 </Routes>
             </BrowserRouter>
         </div>

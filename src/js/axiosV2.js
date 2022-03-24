@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export const API_URL = 'http://192.168.0.104/api';
+export const API_URL = 'https://airfun-b.herokuapp.com/api';
+// export const API_URL = 'http://192.168.0.104/api';
+// export const API_URL = 'https://chat-server-three.vercel.app/api';
 
 const $api = axios.create({
     withCredentials: true,
@@ -19,11 +21,11 @@ $api.interceptors.response.use((config) => {
     if (error.response.status === 401 && error.config && !error.config._isRetry) {
         originalRequest._isRetry = true;
         try {
-            const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true})
-            localStorage.setItem('token', response.data.accessToken);
+            const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true});
+            localStorage.setItem('token', response.data.refreshToken);
             return $api.request(originalRequest);
         } catch (e) {
-            console.log('НЕ АВТОРИЗОВАН')
+            console.log(e)
         }
     }
     throw error;

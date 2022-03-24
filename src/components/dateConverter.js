@@ -43,7 +43,7 @@ const DateConverter = ({d, type = 'date'}) => {
         }
         return dateC(d, 'date')
     };
-    return <div>{dateC(d, type)}</div>
+    return <React.Fragment>{dateC(d, type)}</React.Fragment>
 };
 
 export default observer(DateConverter);

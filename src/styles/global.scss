@@ -166,6 +166,10 @@ h1, h2, h3, h4, h5, h6, p {
   flex-grow: 1;
 }
 
+.ant-menu.ant-menu-inline-collapsed > .ant-menu-item {
+  padding: 0 calc(50% - 32px / 2);
+}
+
 .p24 {
   padding: 24px;
 }
@@ -231,14 +235,30 @@ h1, h2, h3, h4, h5, h6, p {
   overflow: hidden;
 }
 
-.sideR {
+.sideR > div {
+  display: flex;
+  flex-direction: column;
+
+  .ant-menu.ant-menu-root.ant-menu-dark {
+    flex-grow: 1;
+  }
+
   //min-width: 64px !important;
   //flex:      0 0 64px !important;
   //width:     64px !important;
   .side__logo {
+    h3 {
+      width: 100%;
+      text-align: center;
+      line-height: 32px;
+      color: #FFFFFF;
+      background: #00000088;
+    }
+    background-size: cover;
+    background-position: center center;
     height: 32px;
     margin: 16px;
-    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
   }
 }
 
@@ -254,15 +274,14 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 @media (max-width: 768px) {
+  .ant-layout .ant-layout {
+    flex: 1 0 100vw
+  }
+
   .sideR {
-    min-width: 300px !important;
-    flex:      0 0 300px !important;
-    width:     300px !important;
-    .side__logo {
-      height: 32px;
-      margin: 16px;
-      background: rgba(255, 255, 255, 0.3);
-    }
+    min-width: 200px !important;
+    flex: 0 0 200px !important;
+    width: 200px !important;
   }
 
   .ant-layout-sider-collapsed {
@@ -270,12 +289,6 @@ h1, h2, h3, h4, h5, h6, p {
     min-width: 0px !important;
     flex: 0 0 0px !important;
     width: 0px !important;
-
-    .side__logo {
-      height: 32px;
-      margin: 16px;
-      background: rgba(255, 255, 255, 0.3);
-    }
   }
   .content {
     margin: 16px 12px;

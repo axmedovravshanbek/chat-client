@@ -7,7 +7,7 @@ const AuthLangSelect = () => {
     const {store} = useContext(Context);
     const languages = ['en', 'uz', 'ru'];
     return (
-        <div className='flags__container' style={{position:'static'}}>
+        <div className='flags__container'>
             <AnimateSharedLayout>
                 {languages.map((lang) => (
                     <div className='flag' key={lang} onClick={() => store.setLang(lang)}>

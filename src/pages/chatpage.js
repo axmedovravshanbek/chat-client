@@ -11,6 +11,7 @@ import Message from "../components/message";
 import Loading from "./loading";
 import UserInfo from "../components/userInfo";
 import DateConverter from '../components/dateConverter'
+
 const {Content} = Layout;
 
 const ChatPage = () => {
@@ -46,8 +47,8 @@ const ChatPage = () => {
         await setMessage(e.target.value);
         setTyping(e.target.value[0] !== '\n' && e.target.value !== '');
     };
-
     useEffect(() => {
+        textarea.current?.focus();
         store.setOtherUser(Array.from(store.users).filter(({...item}) => item._id === params.id)[0]);
     }, [store.users]);
     useEffect(() => {
@@ -68,7 +69,23 @@ const ChatPage = () => {
             RSId: store.otherUser?.socketId
         })
     }, [store.messages.length]);
-
+    const Chats = () => {
+        const filtered = store.messages.filter(msg => msg.senderId === store.otherUser?._id || msg.receiverId === store.otherUser?._id);
+        if (filtered.length === 0) {
+            return <div className='d-flex jcc aic' style={{width: '100%', height: 'calc(100vh - 250px)'}}>
+                <img src='../img/NoMessages.svg' alt="no messages" className='w300'/>
+            </div>
+        } else return filtered.map((msg, id, arr) => (
+            <React.Fragment key={msg._id}>
+                {new Date(msg.sentTime).toDateString() !== new Date(arr[id - 1]?.sentTime).toDateString() ?
+                    <div className="message__date">
+                        <DateConverter d={msg.sentTime}/>
+                    </div>
+                    : null}
+                <Message msg={msg} my={msg.senderId === store.user?._id}/>
+            </React.Fragment>
+        ))
+    };
     if (store.user?._id === undefined || store.otherUser?._id === undefined) {
         return (
             <Loading/>
@@ -85,16 +102,7 @@ const ChatPage = () => {
             <Content className='content' style={{paddingTop: 0}}>
                 <ScrollToBottom className='overflowY rstb'>
                     <div style={{padding: '16px 0'}} className='d-flex column'>
-                        {store.messages.filter(msg => msg.senderId === store.otherUser?._id || msg.receiverId === store.otherUser?._id).map((msg, id, arr) => (
-                            <React.Fragment key={msg._id}>
-                                {new Date(msg.sentTime).toDateString() !== new Date(arr[id - 1]?.sentTime).toDateString() ?
-                                    <div className="message__date">
-                                        <DateConverter d={msg.sentTime}/>
-                                    </div>
-                                    : null}
-                                <Message msg={msg} my={msg.senderId === store.user?._id}/>
-                            </React.Fragment>
-                        ))}
+                        <Chats/>
                     </div>
                 </ScrollToBottom>
                 <div style={{height: 20, display: 'flex', alignItems: 'flex-end',}}>
@@ -118,7 +126,7 @@ const ChatPage = () => {
                 </div>
             </Content>
         </Layout>
+
     );
 };
-
 export default observer(ChatPage);

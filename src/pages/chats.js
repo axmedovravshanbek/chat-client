@@ -5,7 +5,6 @@ import {Avatar, Layout} from 'antd';
 import MainHeader from "../components/mainHeader";
 import {Link} from "react-router-dom";
 import {lang} from "../js/lang";
-import Status from "../components/status";
 import Loading from "./loading";
 import {avatarColor} from "../js/converters";
 import {MenuUnfoldOutlined} from "@ant-design/icons";

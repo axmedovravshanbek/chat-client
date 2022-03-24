@@ -13,6 +13,7 @@ import {observer} from "mobx-react-lite";
 const RegisterForm = () => {
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
     const [errors, setErrors] = useState({
         email: ['success', {en: '', uz: '', ru: ''}],
         password: ['success', {en: '', uz: '', ru: ''}],
@@ -40,10 +41,10 @@ const RegisterForm = () => {
         }
     };
     const onFinish = (values) => {
-        $api.post('/registration', {...values, imgSrc:img})
+        setLoading2(true);
+        $api.post('/registration', {...values, imgSrc: img})
             .then((response) => {
-                localStorage.setItem('token', response.data.accessToken);
-                store.setAuth(true);
+                localStorage.setItem('token', response.data.refreshToken);
                 store.setUser(response.data.user);
                 if (values.remember) {
                     localStorage.setItem('email', values.email);
@@ -55,7 +56,7 @@ const RegisterForm = () => {
                 navigate('/activate');
             })
             .catch(e => {
-                console.log(e);
+                setLoading2(false);
                 setErrors({
                     ...errors,
                     [e.response?.data?.errorField]: ['error', e.response?.data?.message]
@@ -96,8 +97,8 @@ const RegisterForm = () => {
                         password: localStorage.getItem('password'),
                         remember: true
                     }} onFinishFailed={({errorFields}) => {
-                        console.log(errorFields);
-                        setErrors({
+                    console.log(errorFields);
+                    setErrors({
                         ...errors,
                         [errorFields[0].name[0]]: ['error', errorFields[0].errors[0]]
                     })
@@ -136,7 +137,8 @@ const RegisterForm = () => {
                             {lang.forgot[store.lang]}
                         </Link>
                     </Form.Item>
-                    <Button type="primary" disabled={loading} htmlType="submit" style={{width: '100%'}}>
+                    <Button type="primary" disabled={loading || loading2} htmlType="submit" style={{width: '100%'}}>
+                        {loading2 && <LoadingOutlined/>}
                         {lang.register[store.lang]}
                     </Button>
                     {lang.or[store.lang]} <Link to='/login'>{lang.login[store.lang]}</Link>

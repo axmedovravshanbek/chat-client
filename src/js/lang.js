@@ -15,6 +15,20 @@ export const lang = {
     loadImage: {en: 'upload your image', uz: 'rasmingizni yuklang', ru: 'загружайте изображение'},
     loadingImage: {en: 'uploading image', uz: 'rasmingiz yuklanmoqda', ru: 'изображение загружается'},
     messagePlaceholder: {en: 'Write your message', uz: 'Xabaringizni yozing', ru: 'Напишите ваше сообщение'},
-    chats: {en: 'chats en', uz: 'chats uz', ru: 'chats ru'},
-    people: {en: 'people en', uz: 'people uz', ru: 'people ru'},
+    online: {en: 'online', uz: 'onlayn', ru: 'онлайн'},
+    typing: {en: 'typing...', uz: 'yozmoqda...', ru: 'печатает...'},
+    // chats: {en: 'chats en', uz: 'chats uz', ru: 'chats ru'},
+    lastSeen: {en: 'last online ', uz: 'oxirgi onlayn: ', ru: 'был(а) в сети '},
+    logout: {en: 'Logout', uz: 'Chiqish', ru: 'Выйти'},
+    people: {en: 'Users', uz: 'Foydalanuvchilar', ru: 'Пользователи'},
+    weSentEmail: {
+        en: 'We\'ve sent you an email',
+        uz: 'Sizga elektron xabar yubordik',
+        ru: 'Мы отправили вам электронное письмо'
+    },
+    weSentEmail2: {
+        en: 'Please check your email and verify your account',
+        uz: 'Iltimos, elektron pochtangizni tekshiring va hisobingizni tasdiqlang',
+        ru: 'Пожалуйста, проверьте свою электронную почту и подтвердите свою учетную запись'
+    },
 };
