@@ -1,3 +1,4 @@
+/*
 import React, {useContext} from 'react';
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
@@ -48,9 +49,11 @@ const Chats = ({collapsed, setCollapsed}) => {
                         </div>
                     </Link>
                 )}
+
             </Layout.Content>
         </Layout>
     );
 };
 
 export default observer(Chats);
+*/

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import {Context} from "../index";
+import {store} from "../js/store";
 import {observer} from "mobx-react-lite";
 import {Button, Form, Input, Layout} from "antd";
 import {ArrowLeftOutlined, SendOutlined} from '@ant-design/icons'
@@ -20,7 +20,6 @@ const ChatPage = () => {
     const [typing, setTyping] = useState(false);
     const textarea = useRef(null);
     const params = useParams();
-    const {store} = useContext(Context);
 
     const sendMessage = () => {
         const now = new Date().getTime();
@@ -34,8 +33,10 @@ const ChatPage = () => {
             }]));
             store.socket.emit('iSentMessage', {
                 senderId: store.user._id,
+                senderName: store.user.fullName,
                 receiverId: store.otherUser._id,
                 RSId: store.otherUser.socketId,
+                fcmToken: store.otherUser.fcmToken,
                 msgContent: message,
                 sentTime: now
             })

@@ -1,7 +1,6 @@
 import {makeAutoObservable} from "mobx";
-import $api from "./axiosV2";
 
-export default class Store {
+class Store {
     socket = {
         emit: () => {
         },
@@ -13,7 +12,7 @@ export default class Store {
     messages = [];
     otherUser = {
         email: '',
-        fullName:'',
+        fullName: '',
         imgSrc: '',
         lastOnline: 1651516851,
         isOnline: false,
@@ -38,11 +37,26 @@ export default class Store {
         this.user = user;
     }
 
-    setUsers(users) {this.users = users}
-    setMyChats(myChats) {this.myChats = myChats;}
-    setUnread(unread) {this.unread = unread;}
-    setMessages(messages) {this.messages = messages;}
-    setOtherUser(user) {this.otherUser = user;}
+    setUsers(users) {
+        this.users = users
+    }
+
+    setMyChats(myChats) {
+        this.myChats = myChats;
+    }
+
+    setUnread(unread) {
+        this.unread = unread;
+    }
+
+    setMessages(messages) {
+        this.messages = messages;
+    }
+
+    setOtherUser(user) {
+        this.otherUser = user;
+    }
+
     async logout() {
         try {
             // $api.post('/logout');
@@ -54,3 +68,5 @@ export default class Store {
         }
     }
 }
+
+export const store = new Store();

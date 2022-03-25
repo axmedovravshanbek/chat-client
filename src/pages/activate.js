@@ -1,13 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {lang} from "../js/lang";
 import {Link} from "react-router-dom";
 import AuthLangSelect from "../components/authLangSelect";
-import {Context} from "../index";
+import {store} from "../js/store";
 import {observer} from "mobx-react-lite";
 
 const Activate = () => {
-    const {store} = useContext(Context);
-
     return (
         <div style={{width: '100%', height: '100%'}} className='d-flex column jcc aic'>
             <AuthLangSelect/>

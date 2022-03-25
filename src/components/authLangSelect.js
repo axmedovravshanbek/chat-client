@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import {AnimateSharedLayout, motion} from "framer-motion";
-import {Context} from "../index";
+import {store} from "../js/store";
 import {observer} from "mobx-react-lite";
 
 const AuthLangSelect = () => {
-    const {store} = useContext(Context);
     const languages = ['en', 'uz', 'ru'];
     return (
         <div className='flags__container'>

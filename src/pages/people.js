@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {Context} from "../index";
+import React from 'react';
+import {store} from "../js/store";
 import {observer} from "mobx-react-lite";
 import {Badge, Layout} from 'antd';
 import MainHeader from "../components/mainHeader";
@@ -10,7 +10,6 @@ import {MenuUnfoldOutlined} from "@ant-design/icons";
 import UserInfo from "../components/userInfo";
 
 const People = ({collapsed, setCollapsed}) => {
-    const {store} = useContext(Context);
     store.socket.emit('typing');
     if (store.users.length < 1) {
         return (

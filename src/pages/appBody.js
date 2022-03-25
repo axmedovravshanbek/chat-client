@@ -1,29 +1,28 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
-import {Context} from "../index";
+import {store} from "../js/store";
 import {Link, Navigate, Outlet, Route, Routes, useNavigate} from "react-router-dom";
-import {API_URL} from "../js/axiosV2";
 import People from "./people";
 import ChatPage from './chatpage'
 import {Avatar, Button, Layout, Menu} from "antd";
 import io from "socket.io-client";
 import axios from "axios";
 import {lang} from "../js/lang";
+import {requestForToken} from "../firebase";
 
 
 const AppBody = () => {
     const languages = [{lang: 'en', long: 'English'}, {lang: 'uz', long: 'O\'zbekcha'}, {lang: 'ru', long: 'Русский'}];
     const [collapsed, setCollapsed] = useState(true);
     const navigate = useNavigate();
-    const {store} = useContext(Context);
     useEffect(() => {
-        // const socket = io('http://192.168.0.104');
-        const socket = io('https://airfun-b.herokuapp.com');
-        axios.get(`${API_URL}/refresh`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        const socket = io(process.env.REACT_APP_SERVER_URL);
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/refresh`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
             .then((response) => {
                 localStorage.setItem('token', response.data.refreshToken);
                 store.setUser(response.data.user);
                 store.setSocket(socket);
+                requestForToken(response.data.user?._id);
                 store.socket.emit('imOnline', store.user?._id);
                 if (!response.data.user.isActivated) {
                     navigate('/activate')

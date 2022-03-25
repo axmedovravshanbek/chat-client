@@ -1,10 +1,9 @@
-import React, {useContext} from 'react';
-import {Context} from "../index";
+import React from 'react';
+import {store} from "../js/store";
 import {lang} from "../js/lang";
 import {observer} from "mobx-react-lite";
 
 const DateConverter = ({d, type = 'date'}) => {
-    const {store} = useContext(Context);
     const months = [
         {en: 'January', uz: 'Yanvar', ru: 'Январь'},
         {en: 'February', uz: 'Fevral', ru: 'Февраль'},
@@ -19,8 +18,6 @@ const DateConverter = ({d, type = 'date'}) => {
         {en: 'November', uz: 'Noyabr', ru: 'Ноябрь'},
         {en: 'December', uz: 'Dekabr', ru: 'Декабрь'},
     ];
-
-
     const dateC = (d2, type2 = 'date') => {
         const inputDate = new Date(d2);
         const now = new Date();

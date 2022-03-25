@@ -1,14 +1,14 @@
 import React, {useContext, useState} from 'react';
 import axios from "axios";
-import {Button, Checkbox, Form, Input, Layout, Upload} from 'antd';
+import {Button, Form, Input, Layout, Upload} from 'antd';
 import ImgCrop from 'antd-img-crop';
 import {LoadingOutlined, LockOutlined, MailOutlined, PlusOutlined, UserOutlined} from "@ant-design/icons";
 import {lang} from "../js/lang";
 import {Link, useNavigate} from "react-router-dom";
-import {Context} from "../index";
 import $api from "../js/axiosV2";
 import AuthLangSelect from "../components/authLangSelect";
 import {observer} from "mobx-react-lite";
+import {store} from "../js/store";
 
 const RegisterForm = () => {
     const [img, setImg] = useState('');
@@ -20,7 +20,6 @@ const RegisterForm = () => {
         fullName: ['success', {en: '', uz: '', ru: ''}],
     });
 
-    const {store} = useContext(Context);
     const navigate = useNavigate();
 
     const uploadImage = (file) => {
@@ -46,13 +45,6 @@ const RegisterForm = () => {
             .then((response) => {
                 localStorage.setItem('token', response.data.refreshToken);
                 store.setUser(response.data.user);
-                if (values.remember) {
-                    localStorage.setItem('email', values.email);
-                    localStorage.setItem('password', values.password);
-                } else {
-                    localStorage.removeItem('email');
-                    localStorage.removeItem('password');
-                }
                 navigate('/activate');
             })
             .catch(e => {
@@ -91,18 +83,14 @@ const RegisterForm = () => {
             <AuthLangSelect/>
             <h1>{lang.register[store.lang]}</h1>
             <Layout.Content className='content w500'>
-                <Form onFieldsChange={handleFormChange} name="basic" className='w300' initialValues={
-                    {
-                        email: localStorage.getItem('email'),
-                        password: localStorage.getItem('password'),
-                        remember: true
-                    }} onFinishFailed={({errorFields}) => {
-                    console.log(errorFields);
-                    setErrors({
-                        ...errors,
-                        [errorFields[0].name[0]]: ['error', errorFields[0].errors[0]]
-                    })
-                }} onFinish={onFinish}>
+                <Form onFieldsChange={handleFormChange} name="basic" className='w300'
+                      onFinishFailed={({errorFields}) => {
+                          console.log(errorFields);
+                          setErrors({
+                              ...errors,
+                              [errorFields[0].name[0]]: ['error', errorFields[0].errors[0]]
+                          })
+                      }} onFinish={onFinish}>
                     <ImgCrop rotate>
                         <Upload name="avatar" listType="picture-card" className='image-upload' showUploadList={false}
                                 onChange={onChange}>
@@ -115,7 +103,6 @@ const RegisterForm = () => {
                     ]} validateStatus={errors.email[0]} help={errors.email[1][store.lang]} name="email">
                         <Input placeholder={lang.emailPlaceholder[store.lang]} prefix={<MailOutlined/>}/>
                     </Form.Item>
-                    {/*name*/}
                     <Form.Item rules={[
                         {required: true, message: {ru: 'required ru', uz: 'required uz', en: 'required en'}},
                         {min: 5, message: {ru: 'min 5 ru', uz: 'min 5 uz', en: 'min 5 en'}},
@@ -130,9 +117,6 @@ const RegisterForm = () => {
                         <Input.Password prefix={<LockOutlined/>} placeholder={lang.passwordPlaceholder[store.lang]}/>
                     </Form.Item>
                     <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>{lang.rememberMe[store.lang]}</Checkbox>
-                        </Form.Item>
                         <Link to='/forgot' style={{float: 'right'}}>
                             {lang.forgot[store.lang]}
                         </Link>

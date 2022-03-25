@@ -1,13 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Avatar} from "antd";
-import {Context} from "../index";
 import {avatarColor} from "../js/converters";
 import Status from "./status";
 import {observer} from "mobx-react-lite";
 
 const UserInfo = ({user}) => {
-    const {store} = useContext(Context);
-
     return (
         <React.Fragment>
             <Avatar size={48} style={{
