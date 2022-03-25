@@ -19,10 +19,11 @@ export const requestForToken = (userId) => {
             axios.post(
                 `${process.env.REACT_APP_SERVER_URL}api/set_token`,
                 {_id: userId, fcmToken: currentToken})
-                .then(()=>console.log('token set'))
-                .catch(()=>console.log('token not set'))
+                .then(() => console.log('token set'))
+                .catch(() => console.log('token not set'))
         })
         .catch((err) => {
             console.log('An error occurred while retrieving token. ', err);
         })
+        .finally(() => console.log(userId))
 };
