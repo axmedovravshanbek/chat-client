@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {store} from "../js/store";
 import {Link, Navigate, Outlet, Route, Routes, useNavigate} from "react-router-dom";
@@ -42,7 +42,6 @@ const AppBody = () => {
                 });
             })
             .catch(e => {
-                console.log(e.response);
                 navigate('/login')
             });
         // return () => {
@@ -89,7 +88,7 @@ const AppBody = () => {
                 <Routes>
                     <Route exact path='/' element={<People collapsed={collapsed} setCollapsed={setCollapsed}/>}/>
                     <Route exact path='/chat/:id' element={<ChatPage/>}/>
-                    <Route path="*" element={<Navigate to='/'/>} />
+                    <Route path="*" element={<Navigate to='/'/>}/>
                 </Routes>
             </Layout>
             <Outlet/>
