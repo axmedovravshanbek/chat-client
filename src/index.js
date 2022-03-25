@@ -1,10 +1,9 @@
-import React, {createContext} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-// import axios from "axios";
-
 import './styles/global.scss'
+// import axios from "axios";
 
 ReactDOM.render(
     <App/>,

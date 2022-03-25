@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
 import {Button, Form, Input, Layout, Upload} from 'antd';
 import ImgCrop from 'antd-img-crop';
@@ -41,7 +41,7 @@ const RegisterForm = () => {
     };
     const onFinish = (values) => {
         setLoading2(true);
-        $api.post('/registration', {...values, imgSrc: img})
+        $api.post(`${process.env.REACT_APP_SERVER_URL}api/registration`, values)
             .then((response) => {
                 localStorage.setItem('token', response.data.refreshToken);
                 store.setUser(response.data.user);

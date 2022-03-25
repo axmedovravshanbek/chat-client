@@ -17,7 +17,7 @@ const AppBody = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const socket = io(process.env.REACT_APP_SERVER_URL);
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/refresh`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        axios.get(`${process.env.REACT_APP_SERVER_URL}api/refresh`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
             .then((response) => {
                 localStorage.setItem('token', response.data.refreshToken);
                 store.setUser(response.data.user);

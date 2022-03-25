@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {store} from "../js/store";
 import {observer} from "mobx-react-lite";
 import {useNavigate} from "react-router";
@@ -20,7 +20,7 @@ const LoginForm = () => {
 
     const onFinish = (values) => {
         setLoading(true);
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/api/login`, values)
+        axios.post(`${process.env.REACT_APP_SERVER_URL}api/login`, values)
             .then(async (response) => {
                 await localStorage.setItem('token', response.data.refreshToken);
                 await store.setUser(response.data.user);
