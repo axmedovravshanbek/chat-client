@@ -45,7 +45,7 @@ const AppBody = () => {
     return (
         <Layout className='app_body'>
             <Layout.Sider className='sideR' trigger={null} collapsible collapsed={collapsed}>
-                <div className='side__logo' style={{backgroundImage: `url("${store.user?.imgSrc}")`}}>
+                <div className='side__logo' style={{backgroundImage: `url("${store.user?.imageUrl}")`}}>
                     <h3>{!collapsed && store.user?.givenName}</h3>
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={[store.lang]}>
