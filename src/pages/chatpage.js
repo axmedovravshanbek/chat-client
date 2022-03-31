@@ -33,7 +33,7 @@ const ChatPage = () => {
             }]));
             store.socket.emit('iSentMessage', {
                 senderId: store.user._id,
-                senderName: store.user.fullName,
+                senderName: `${store.user.givenName} ${store.user.familyName}`,
                 receiverId: store.otherUser._id,
                 RSId: store.otherUser.socketId,
                 fcmToken: store.otherUser.fcmToken,

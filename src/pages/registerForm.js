@@ -1,3 +1,4 @@
+/*
 import React, {useState} from 'react';
 import axios from "axios";
 import {Button, Form, Input, Layout, Upload} from 'antd';
@@ -133,3 +134,4 @@ const RegisterForm = () => {
 };
 
 export default observer(RegisterForm);
+*/
