@@ -14,7 +14,7 @@ initializeApp({
 
 const messaging = getMessaging();
 export const requestForToken = (userId) => {
-    getToken(messaging, {vapidKey: 'BHyDTmFLExfXfUtnle7HXJ9T_sNXqvNqCLf0XGbzk8-nemmhVowFNBdDiv52T_WwQznJH8Cdc8XGwvjGPczRxNw'})
+    getToken(messaging, {vapidKey: process.env.REACT_APP_FCM_VAPID_KEY})
         .then(currentToken => {
             axios.post(
                 `${process.env.REACT_APP_SERVER_URL}api/set_token`,
@@ -25,5 +25,4 @@ export const requestForToken = (userId) => {
         .catch((err) => {
             console.log('An error occurred while retrieving token. ', err);
         })
-        .finally(() => console.log(userId))
 };

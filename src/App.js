@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {observer} from "mobx-react-lite";
+import {BrowserRouter} from "react-router-dom";
 
 import AppBody from './pages/appBody'
-import Activate from "./pages/activate";
-import LoginForm from "./pages/loginForm";
-import RegisterForm from "./pages/registerForm";
+import SignIn from "./pages/signIn";
+import {store} from "./js/store";
+import Loading from "./pages/loading";
 
 import 'antd/dist/antd.css'
 
@@ -13,20 +14,13 @@ const App = () => {
     window.addEventListener('resize', () => {
         setVH(window.innerHeight)
     });
-
-    return (
-        <div style={{height: vh}}>
-            <BrowserRouter>
-                <Routes>
-                    <Route exact path="/*" element={<AppBody/>}/>
-                    <Route path="/login" element={<LoginForm/>}/>
-                    <Route path="/registration" element={<RegisterForm/>}/>
-                    <Route path="/activate" element={<Activate/>}/>
-                    <Route path="*" element={<div>404 outer</div>} />
-                </Routes>
+    return <div style={{height: vh}}>
+        {(store.user?.email)
+            ? <BrowserRouter>
+                <AppBody/>
             </BrowserRouter>
-        </div>
-    );
+            : <SignIn/>
+        }
+    </div>
 };
-
-export default App;
+export default observer(App);

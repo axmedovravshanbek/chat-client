@@ -77,7 +77,7 @@ const ChatPage = () => {
                 <img src='../img/NoMessages.svg' alt="no messages" className='w300'/>
             </div>
         } else return filtered.map((msg, id, arr) => (
-            <React.Fragment key={msg._id}>
+            <React.Fragment key={msg.sentTime}>
                 {new Date(msg.sentTime).toDateString() !== new Date(arr[id - 1]?.sentTime).toDateString() ?
                     <div className="message__date">
                         <DateConverter d={msg.sentTime}/>

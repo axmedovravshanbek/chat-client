@@ -5,7 +5,6 @@ import DateConverter from "./dateConverter";
 import {lang} from "../js/lang";
 
 const Status = ({user}) => {
-
     if (user.typingTo === store.user._id && store.user._id !== undefined) {
         return <h4 style={{color: '#1890FF'}}>{lang.typing[store.lang]}</h4>
     }

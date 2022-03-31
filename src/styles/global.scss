@@ -207,6 +207,7 @@ h1, h2, h3, h4, h5, h6, p {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 3;
   display: flex;
   margin: 16px 24px;
 
@@ -243,9 +244,6 @@ h1, h2, h3, h4, h5, h6, p {
     flex-grow: 1;
   }
 
-  //min-width: 64px !important;
-  //flex:      0 0 64px !important;
-  //width:     64px !important;
   .side__logo {
     h3 {
       width: 100%;
@@ -254,6 +252,7 @@ h1, h2, h3, h4, h5, h6, p {
       color: #FFFFFF;
       background: #00000088;
     }
+
     background-size: cover;
     background-position: center center;
     height: 32px;
