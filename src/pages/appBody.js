@@ -8,21 +8,22 @@ import {Avatar, Button, Layout, Menu} from "antd";
 import io from "socket.io-client";
 import {lang} from "../js/lang";
 import {requestForToken} from "../firebase";
-import {useGoogleLogout} from "react-google-login";
+// import {useGoogleLogout} from "react-google-login";
 
 const AppBody = () => {
     const navigate = useNavigate();
     const languages = [{lang: 'en', long: 'English'}, {lang: 'uz', long: 'O\'zbekcha'}, {lang: 'ru', long: 'Русский'}];
     const [collapsed, setCollapsed] = useState(true);
-    const {signOut} = useGoogleLogout({
+   /* const {signOut} = useGoogleLogout({
         clientId: process.env.REACT_APP_GOOGLE_ID,
         onLogoutSuccess: () => {
+            console.log()
             store.socket.emit('disconnected');
             store.setUser({});
             navigate('/')
         },
         onFailure: (e) => console.log(e)
-    });
+    });*/
     useEffect(() => {
         requestForToken(store.user?._id);
         const socket = io(process.env.REACT_APP_SERVER_URL);
@@ -59,7 +60,7 @@ const AppBody = () => {
                         </Menu.Item>
                     ))}
                 </Menu>
-                <Button type='danger' style={{height: 40}} onClick={signOut}>
+                <Button type='danger' style={{height: 40}} onClick={()=>console.log(515151)}>
                     {lang.logout[store.lang]}
                 </Button>
             </Layout.Sider>
